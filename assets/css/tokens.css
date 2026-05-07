@@ -1,0 +1,102 @@
+/* tokens.css — design tokens for BS Graphix */
+:root {
+  /* Brand */
+  --brand-navy: #1F2D6E;
+  --brand-navy-700: #182356;
+  --brand-navy-900: #0E1538;
+  --brand-red: #E63946;
+  --brand-red-700: #C42E3B;
+
+  /* Gradient accents (warm → cool) */
+  --grad-yellow: #FFC857;
+  --grad-orange: #FF9F45;
+  --grad-pink: #EF476F;
+  --grad-purple: #8B5CF6;
+  --grad-blue: #3B82F6;
+
+  --grad-warm: linear-gradient(135deg, #FFC857 0%, #FF9F45 25%, #EF476F 60%, #8B5CF6 100%);
+  --grad-warm-soft: linear-gradient(135deg, rgba(255,200,87,0.15), rgba(239,71,111,0.15) 60%, rgba(139,92,246,0.18));
+  --grad-navy: linear-gradient(135deg, #1F2D6E 0%, #0E1538 100%);
+  --grad-text: linear-gradient(95deg, #FFC857 0%, #EF476F 50%, #8B5CF6 100%);
+
+  /* Neutrals */
+  --ink: #0F172A;
+  --ink-2: #1F2937;
+  --mute: #64748B;
+  --mute-2: #94A3B8;
+  --bg: #FFFFFF;
+  --bg-soft: #F6F7FB;
+  --bg-mute: #EEF1F8;
+  --line: #E5E7EB;
+  --line-strong: #CBD5E1;
+
+  /* Type */
+  --font-display: "Bricolage Grotesque", "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-body: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Type scale (fluid) */
+  --fs-300: clamp(0.78rem, 0.74rem + 0.18vw, 0.85rem);
+  --fs-400: clamp(0.95rem, 0.90rem + 0.22vw, 1.05rem);
+  --fs-500: clamp(1.10rem, 1.02rem + 0.40vw, 1.25rem);
+  --fs-600: clamp(1.30rem, 1.15rem + 0.75vw, 1.65rem);
+  --fs-700: clamp(1.65rem, 1.30rem + 1.5vw, 2.30rem);
+  --fs-800: clamp(2.20rem, 1.60rem + 2.5vw, 3.40rem);
+  --fs-900: clamp(2.85rem, 2.00rem + 4.0vw, 5.20rem);
+  --fs-display: clamp(3.50rem, 2.20rem + 6.5vw, 7.20rem);
+
+  /* Weights */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-black: 800;
+
+  /* Spacing scale */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --sp-10: 8rem;
+
+  /* Radii */
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  /* Shadows */
+  --sh-sm: 0 1px 2px rgba(15,23,42,.05), 0 1px 3px rgba(15,23,42,.06);
+  --sh-md: 0 6px 18px rgba(15,23,42,.08), 0 2px 6px rgba(15,23,42,.05);
+  --sh-lg: 0 22px 44px -18px rgba(15,23,42,.18), 0 8px 18px -8px rgba(15,23,42,.10);
+  --sh-glow: 0 14px 40px -10px rgba(31,45,110,0.30);
+  --sh-red: 0 14px 40px -10px rgba(230,57,70,0.40);
+
+  /* Layout */
+  --container: min(1240px, 100% - 2.5rem);
+  --container-narrow: min(880px, 100% - 2.5rem);
+  --container-wide: min(1440px, 100% - 2.0rem);
+  --header-h: 76px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(.16,.84,.32,1);
+  --ease-in-out: cubic-bezier(.65,.05,.35,1);
+  --ease-spring: cubic-bezier(.5,1.6,.4,1);
+  --dur-1: 180ms;
+  --dur-2: 320ms;
+  --dur-3: 520ms;
+  --dur-4: 800ms;
+  --dur-5: 1200ms;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --header-h: 64px;
+  }
+}

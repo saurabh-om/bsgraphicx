@@ -1,0 +1,386 @@
+/* flashy.css — extra premium-feel enhancements
+ *  - .has-spotlight        cursor-following soft glow on dark bands
+ *  - .scroll-progress      thin top gradient bar that fills with scroll
+ *  - .floating-fab         pulsing bottom-right contact FAB with fan-out actions
+ *  - .btn.btn-magnetic     vanilla magnetic CTA hover
+ */
+
+/* ===== Cursor spotlight on dark sections ===== */
+.has-spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.has-spotlight::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    280px circle at var(--mx, -200px) var(--my, -200px),
+    rgba(255, 200, 87, 0.18),
+    rgba(239, 71, 111, 0.12) 35%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 360ms ease;
+  z-index: 0;
+  border-radius: inherit;
+  mix-blend-mode: screen;
+}
+.has-spotlight.is-pointing::after { opacity: 1; }
+/* Make sure interior content sits above the glow */
+.has-spotlight > * { position: relative; z-index: 1; }
+
+/* On lighter sections we use a subtler version */
+.has-spotlight.light::after {
+  background: radial-gradient(
+    260px circle at var(--mx, -200px) var(--my, -200px),
+    rgba(31, 45, 110, 0.10),
+    rgba(230, 57, 70, 0.07) 40%,
+    transparent 60%
+  );
+  mix-blend-mode: multiply;
+}
+
+/* Footer spotlight = brand-warm tint over the dark bg */
+.site-footer.has-spotlight::after {
+  background: radial-gradient(
+    320px circle at var(--mx, -200px) var(--my, -200px),
+    rgba(255, 200, 87, 0.10),
+    rgba(139, 92, 246, 0.10) 40%,
+    transparent 65%
+  );
+}
+
+/* ===== Top scroll-progress gradient bar ===== */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 100%;
+  z-index: 70;
+  background: rgba(15, 23, 42, 0.04);
+  pointer-events: none;
+}
+.scroll-progress::after {
+  content: "";
+  position: absolute; inset: 0 auto 0 0;
+  width: var(--p, 0%);
+  background: linear-gradient(90deg, #FFC857, #EF476F, #8B5CF6);
+  transition: width 80ms linear;
+  box-shadow: 0 0 12px rgba(239, 71, 111, 0.55);
+}
+
+/* ===== Floating Quick-chat FAB ===== */
+.floating-fab {
+  position: fixed;
+  right: clamp(1rem, 2vw, 1.5rem);
+  bottom: clamp(1rem, 2vw, 1.5rem);
+  z-index: 80;
+  display: flex; flex-direction: column-reverse; align-items: center;
+  gap: 0.6rem;
+  transform: translateY(140px);
+  opacity: 0;
+  transition: transform 480ms cubic-bezier(.16,.84,.32,1), opacity 360ms ease;
+  pointer-events: none;
+}
+.floating-fab.visible {
+  transform: none;
+  opacity: 1;
+  pointer-events: auto;
+}
+.floating-fab.near-footer {
+  transform: translateY(140px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fab-main {
+  position: relative;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #E63946 0%, #EF476F 60%, #8B5CF6 110%);
+  box-shadow: 0 14px 32px -10px rgba(230, 57, 70, 0.55), 0 4px 12px rgba(15, 23, 42, 0.18);
+  color: #fff;
+  display: grid; place-items: center;
+  font-size: 1.35rem;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  transition: transform 320ms cubic-bezier(.5,1.6,.4,1), box-shadow 320ms ease;
+  z-index: 2;
+}
+.fab-main::before,
+.fab-main::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--brand-red);
+  opacity: 0.55;
+  pointer-events: none;
+  animation: fab-pulse 2.4s ease-out infinite;
+}
+.fab-main::after { animation-delay: 1.2s; }
+@keyframes fab-pulse {
+  0%   { transform: scale(1);   opacity: 0.55; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+.fab-main:hover { transform: translateY(-3px) scale(1.04); }
+.fab-main .fab-icon-open,
+.fab-main .fab-icon-close {
+  transition: transform 320ms cubic-bezier(.5,1.6,.4,1), opacity 200ms ease;
+}
+.fab-main .fab-icon-close { position: absolute; opacity: 0; transform: rotate(-45deg); }
+.floating-fab.open .fab-main .fab-icon-open { opacity: 0; transform: rotate(45deg); }
+.floating-fab.open .fab-main .fab-icon-close { opacity: 1; transform: rotate(0); }
+.floating-fab.open .fab-main::before,
+.floating-fab.open .fab-main::after { animation: none; }
+
+.fab-actions {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+.fab-actions a {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--brand-navy);
+  display: grid; place-items: center;
+  font-size: 1.05rem;
+  box-shadow: var(--sh-md);
+  border: 1px solid var(--line);
+  transform: translateY(20px) scale(0.6);
+  opacity: 0;
+  transition: transform 360ms cubic-bezier(.5,1.6,.4,1), opacity 240ms ease, background 200ms ease, color 200ms ease;
+  pointer-events: none;
+  position: relative;
+}
+.fab-actions a[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute; right: calc(100% + 12px); top: 50%; transform: translateY(-50%);
+  background: var(--brand-navy-900); color: #fff;
+  font-size: 0.7rem; font-weight: var(--fw-semibold);
+  letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 0.35rem 0.7rem; border-radius: var(--r-pill);
+  white-space: nowrap;
+  opacity: 0; transition: opacity 200ms ease;
+  pointer-events: none;
+}
+.fab-actions a:hover[data-tip]::after { opacity: 1; }
+.floating-fab.open .fab-actions { pointer-events: auto; }
+.floating-fab.open .fab-actions a {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+.floating-fab.open .fab-actions a:nth-child(1) { transition-delay: 60ms; }
+.floating-fab.open .fab-actions a:nth-child(2) { transition-delay: 120ms; }
+.floating-fab.open .fab-actions a:nth-child(3) { transition-delay: 180ms; }
+.fab-actions a:hover {
+  background: var(--brand-red);
+  color: #fff;
+  border-color: var(--brand-red);
+  transform: translateY(-2px) scale(1.04);
+}
+.fab-actions a.wa:hover { background: #25D366; border-color: #25D366; }
+
+/* ===== Magnetic CTA prep — JS sets translate via inline style; just smooth it */
+.btn-magnetic {
+  transition: transform 280ms cubic-bezier(.16,.84,.32,1),
+              background var(--dur-1) var(--ease-out),
+              color var(--dur-1) var(--ease-out),
+              box-shadow var(--dur-2) var(--ease-out);
+}
+.btn-magnetic:hover { transform: translateY(-2px) scale(1.02); /* baseline hover; JS layers translate on top */ }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .has-spotlight::after,
+  .fab-main::before, .fab-main::after,
+  .fab-actions a {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Don't show the FAB on extra-small screens? Keep it - mobile users want chat */
+@media (max-width: 540px) {
+  .fab-main { width: 54px; height: 54px; font-size: 1.2rem; }
+  .fab-actions a { width: 44px; height: 44px; }
+}
+
+/* ===== Split-reveal headlines (B) =================================
+ * The heading's HTML is cloned into top + bottom halves at runtime by
+ * effects.js. Each half is clipped, starts off-screen, then slides into
+ * place from above (top half) and below (bottom half) — meeting in the
+ * middle.
+ * ============================================================== */
+.split-reveal {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  /* leave a tiny extra line-height so descenders aren't clipped */
+  padding-bottom: 0.04em;
+}
+.split-reveal > .sr-orig {
+  visibility: hidden; /* preserves layout */
+}
+.split-reveal > .sr-half {
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+  transition: transform 880ms cubic-bezier(.16,.84,.32,1);
+  will-change: transform;
+}
+.split-reveal > .sr-half.top {
+  clip-path: inset(-12% 0 50% 0);
+  -webkit-clip-path: inset(-12% 0 50% 0);
+  transform: translate3d(0, -110%, 0);
+}
+.split-reveal > .sr-half.bot {
+  clip-path: inset(50% 0 -12% 0);
+  -webkit-clip-path: inset(50% 0 -12% 0);
+  transform: translate3d(0, 110%, 0);
+  transition-delay: 80ms;
+}
+.split-reveal.in > .sr-half.top,
+.split-reveal.in > .sr-half.bot {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Subtle red separator line that draws across the meeting line on reveal */
+.split-reveal::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  height: 2px;
+  background: var(--brand-red);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 600ms cubic-bezier(.16,.84,.32,1) 100ms;
+  border-radius: 2px;
+  opacity: 0.85;
+}
+.split-reveal.in::after {
+  transform: scaleX(1);
+  /* fade out after the split is done */
+  animation: split-line-out 800ms ease forwards 700ms;
+}
+@keyframes split-line-out {
+  to { opacity: 0; transform: scaleX(1.05); }
+}
+
+/* ===== 3D Flip card (D) =========================================== */
+.flip-card {
+  perspective: 1200px;
+  display: block;
+  position: relative;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.85s cubic-bezier(.16,.84,.32,1);
+  will-change: transform;
+}
+.flip-card:hover .flip-inner,
+.flip-card:focus-within .flip-inner {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--r-lg);
+  padding: 2rem;
+  display: flex; flex-direction: column;
+  border: 1px solid var(--line);
+  background: #fff;
+  overflow: hidden;
+  box-shadow: var(--sh-sm);
+}
+.flip-front .icon { margin-bottom: 1rem; }
+.flip-front .num {
+  position: absolute; top: 1rem; right: 1.25rem;
+  font-family: var(--font-display); font-weight: var(--fw-black);
+  font-size: 3rem; line-height: 1; color: rgba(31,45,110,0.06);
+}
+.flip-front h4 { margin-bottom: 0.5rem; color: var(--brand-navy); }
+.flip-front p { color: var(--mute); font-size: var(--fs-400); }
+.flip-front .hint {
+  margin-top: auto; display: inline-flex; align-items: center; gap: 0.4rem;
+  color: var(--brand-navy); font-weight: var(--fw-semibold); font-size: var(--fs-400);
+}
+.flip-front .hint i { color: var(--brand-red); transition: transform var(--dur-2) var(--ease-spring); }
+.flip-card:hover .flip-front .hint i { transform: translateX(4px); }
+
+.flip-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, var(--brand-navy) 0%, var(--brand-navy-900) 100%);
+  color: #fff;
+  border-color: var(--brand-navy-700);
+}
+.flip-back::before {
+  content: "";
+  position: absolute; right: -50px; top: -50px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(239,71,111,0.30), transparent 70%);
+  pointer-events: none;
+}
+.flip-back .meta {
+  color: #FFC857;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-300);
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.flip-back h5 {
+  color: #fff;
+  font-size: var(--fs-500);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+.flip-back ul { display: grid; gap: 0.45rem; margin-top: 0.25rem; }
+.flip-back li {
+  position: relative; padding-left: 1rem;
+  font-size: var(--fs-400); color: rgba(255,255,255,0.92);
+}
+.flip-back li::before {
+  content: "";
+  position: absolute; left: 0; top: 0.62em;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--brand-red);
+}
+.flip-back .more {
+  margin-top: auto;
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  color: #fff; font-weight: var(--fw-semibold);
+  font-size: var(--fs-400);
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+  padding-bottom: 2px;
+  align-self: flex-start;
+}
+.flip-back .more i { color: #FFC857; }
+
+/* The flip-card is a wrapping anchor; suppress the .card hover translate */
+.svc-grid .flip-card { min-height: 320px; height: auto; }
+@media (max-width: 540px) { .svc-grid .flip-card { min-height: 290px; } }
+
+/* ===== Parallax ============================================ */
+[data-parallax] { will-change: transform; }
+
+/* ===== Reduced motion override for new effects ============== */
+@media (prefers-reduced-motion: reduce) {
+  .split-reveal > .sr-half,
+  .split-reveal::after { transition: none !important; animation: none !important; transform: none !important; }
+  .split-reveal > .sr-orig { visibility: visible !important; }
+  .split-reveal > .sr-half { display: none !important; }
+  .flip-card .flip-inner { transition: none !important; }
+  [data-parallax] { transform: none !important; }
+}

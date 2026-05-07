@@ -1,0 +1,53 @@
+/* pages/clients.css */
+
+.client-section + .client-section { margin-top: 3rem; }
+.client-section h3 { margin-bottom: 1.5rem; }
+.client-section .lead { color: var(--mute); margin-bottom: 1.5rem; max-width: 60ch; }
+
+.client-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+}
+@media (max-width: 920px) { .client-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 540px) { .client-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.client-cell {
+  position: relative; aspect-ratio: 4/3;
+  background: #fff; border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  display: grid; place-items: center;
+  padding: 1.5rem 1.25rem;
+  transition: transform var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out);
+  overflow: hidden;
+}
+.client-cell:hover { transform: translateY(-3px); box-shadow: var(--sh-lg); border-color: rgba(31,45,110,0.18); }
+.client-cell img {
+  max-width: 88%;
+  max-height: 82%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(100%); opacity: 0.85;
+  transition: filter var(--dur-2) var(--ease-out), opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+}
+.client-cell:hover img { filter: none; opacity: 1; transform: scale(1.04); }
+.client-cell .name {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 0.6rem 1rem;
+  background: linear-gradient(180deg, transparent, rgba(14,21,56,0.92));
+  color: #fff;
+  font-size: var(--fs-300); font-weight: var(--fw-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);
+}
+.client-cell:hover .name { opacity: 1; transform: none; }
+.client-cell .badge {
+  position: absolute; top: 0.6rem; left: 0.6rem;
+  background: var(--brand-red); color: #fff;
+  font-size: 0.65rem; font-weight: var(--fw-bold); letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.2rem 0.55rem; border-radius: var(--r-pill);
+}
+
+.sector-section h3 { text-align: center; }
+.sector-section .lead { text-align: center; margin-inline: auto; }

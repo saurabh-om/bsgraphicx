@@ -1,0 +1,114 @@
+/* base.css — typography, links, utilities */
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-400);
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--bg);
+  font-feature-settings: "ss01", "cv11";
+  overflow-x: hidden;
+}
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+h1 { font-size: var(--fs-900); letter-spacing: -0.035em; line-height: 1.0; }
+h2 { font-size: var(--fs-800); }
+h3 { font-size: var(--fs-700); }
+h4 { font-size: var(--fs-600); letter-spacing: -0.01em; }
+h5 { font-size: var(--fs-500); letter-spacing: 0; line-height: 1.25; }
+p { font-size: inherit; max-width: 68ch; }
+a { transition: color var(--dur-1) var(--ease-out); }
+a:hover { color: var(--brand-red); }
+strong { font-weight: var(--fw-bold); }
+
+/* Containers */
+.container { width: var(--container); margin-inline: auto; }
+.container-narrow { width: var(--container-narrow); margin-inline: auto; }
+.container-wide { width: var(--container-wide); margin-inline: auto; }
+
+/* Section blocks */
+section { position: relative; padding-block: clamp(3.5rem, 5vw + 1rem, 7rem); }
+section.tight { padding-block: clamp(2rem, 3vw + 0.5rem, 4rem); }
+section.flush-top { padding-top: 0; }
+section.flush-bot { padding-bottom: 0; }
+.section-soft { background: var(--bg-soft); }
+.section-mute { background: var(--bg-mute); }
+.section-dark { background: var(--brand-navy-900); color: #E2E8F0; }
+.section-dark h1, .section-dark h2, .section-dark h3 { color: #fff; }
+
+/* Section heads */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  font-family: var(--font-display);
+  font-size: var(--fs-300);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brand-navy);
+}
+.eyebrow::before, .eyebrow::after {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--brand-red);
+}
+.eyebrow.solo::after { display: none; }
+.section-head { margin-bottom: clamp(2rem, 3vw, 3rem); max-width: 56ch; }
+.section-head.center { margin-inline: auto; text-align: center; }
+.section-head .lead { color: var(--mute); margin-top: 0.75rem; font-size: var(--fs-500); line-height: 1.55; }
+
+/* Gradient & accent text */
+.text-grad {
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.text-red { color: var(--brand-red); }
+.text-navy { color: var(--brand-navy); }
+.text-mute { color: var(--mute); }
+
+/* Underline highlight */
+.hl {
+  background-image: linear-gradient(120deg, transparent 0 18%, rgba(230,57,70,0.18) 18% 88%, transparent 88%);
+  padding-inline: 0.06em;
+}
+
+/* Utility */
+.flex { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 0.5rem; } .gap-3 { gap: 0.75rem; } .gap-4 { gap: 1rem; } .gap-6 { gap: 1.5rem; }
+.grid { display: grid; }
+.text-center { text-align: center; }
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.no-scroll { overflow: hidden; }
+.mt-0 { margin-top: 0; } .mt-2 { margin-top: 1rem; } .mt-4 { margin-top: 2rem; } .mt-6 { margin-top: 3rem; }
+.divider-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand-red); display: inline-block; }
+
+/* Lists */
+.bullet-list { display: grid; gap: 0.5rem; }
+.bullet-list li {
+  position: relative; padding-left: 1.5rem;
+  color: var(--ink-2);
+}
+.bullet-list li::before {
+  content: ""; position: absolute; left: 0; top: 0.55em;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--brand-red);
+}
+.bullet-list.compact li { padding-left: 1.2rem; }
+.bullet-list.compact li::before { width: 6px; height: 6px; top: 0.6em; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

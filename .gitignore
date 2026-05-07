@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+._*
+Icon?
+Icon\r
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Office temp
+~$*
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project housekeeping
+_source/
+node_modules/
+
+# Local server log files
+/tmp/bsserver*.log
