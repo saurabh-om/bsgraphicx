@@ -93,6 +93,12 @@
   opacity: 0;
   pointer-events: none;
 }
+/* Don't let the FAB overlap the open mobile menu (header stacking context caps below the FAB's z-index) */
+body.nav-open .floating-fab {
+  transform: translateY(140px);
+  opacity: 0;
+  pointer-events: none;
+}
 
 .fab-main {
   position: relative;
