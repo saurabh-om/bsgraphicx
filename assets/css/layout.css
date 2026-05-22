@@ -86,7 +86,12 @@ body.nav-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
 /* Mobile menu */
 @media (max-width: 920px) {
   .nav-primary {
-    position: fixed; inset: var(--header-h) 0 0 0;
+    /* Header has backdrop-filter, which makes it the containing block for
+       fixed descendants — so size against the header box explicitly, not the
+       viewport, otherwise the menu collapses to zero height on mobile. */
+    position: fixed; top: var(--header-h); left: 0; right: 0;
+    height: calc(100vh - var(--header-h));
+    height: calc(100dvh - var(--header-h));
     background: #fff;
     flex-direction: column; align-items: stretch; gap: 0.25rem;
     padding: 1.25rem 1.5rem 2rem;
